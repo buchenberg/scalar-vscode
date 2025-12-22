@@ -1,0 +1,117 @@
+{
+  "name": "scalar-openapi-preview",
+  "displayName": "Scalar OpenAPI Preview",
+  "description": "Preview OpenAPI/Swagger specifications with the beautiful Scalar API reference viewer",
+  "version": "0.1.0",
+  "publisher": "GregoryBuchenberger",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "openapi",
+    "swagger",
+    "api",
+    "scalar",
+    "preview",
+    "documentation"
+  ],
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/buchenberg/scalar-vscode"
+  },
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "scalar.openPreview",
+        "title": "Scalar: Open Preview",
+        "icon": "$(open-preview)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml",
+          "command": "scalar.openPreview",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml",
+          "command": "scalar.openPreview",
+          "group": "navigation"
+        }
+      ],
+      "explorer/context": [
+        {
+          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml",
+          "command": "scalar.openPreview",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Scalar OpenAPI Preview",
+      "properties": {
+        "scalar.theme": {
+          "type": "string",
+          "default": "auto",
+          "enum": [
+            "auto",
+            "light",
+            "dark",
+            "purple",
+            "solarized",
+            "bluePlanet",
+            "saturn",
+            "kepler",
+            "mars",
+            "deepSpace",
+            "none"
+          ],
+          "description": "Theme for the Scalar API reference viewer"
+        },
+        "scalar.showSidebar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the sidebar navigation in the preview"
+        },
+        "scalar.hideModels": {
+          "type": "boolean",
+          "default": false,
+          "description": "Hide the models/schemas section"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "node esbuild.js --production",
+    "compile": "node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "lint": "eslint src --ext ts",
+    "package": "node build-vsix.js",
+    "package:vscode": "node build-vsix.js vscode",
+    "package:openvsx": "node build-vsix.js openvsx"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "esbuild": "^0.27.2",
+    "eslint": "^8.54.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "@scalar/api-reference": "^1.40.9",
+    "yaml": "^2.3.4"
+  }
+}
