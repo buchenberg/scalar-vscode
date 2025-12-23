@@ -2,16 +2,16 @@
 
 A Visual Studio Code extension that provides a beautiful, interactive preview of OpenAPI/Swagger specifications using the [Scalar](https://scalar.com) API reference viewer.
 
-![Scalar Preview](https://raw.githubusercontent.com/scalar/scalar/main/.github/assets/screenshot.png)
+![Scalar Preview](/media/screenshot.png)
 
 ## Features
 
-- 🎨 **Beautiful UI** - Modern, responsive API documentation viewer
-- 📝 **JSON & YAML support** - Works with both OpenAPI formats
-- 🔄 **Live reload** - Preview updates automatically when you save
-- 🌙 **Theme support** - Respects your VS Code theme (dark/light)
-- 🧭 **Sidebar navigation** - Easy navigation through your API
-- 🧪 **Try it out** - Test your API endpoints directly
+- **Beautiful UI** - Modern, responsive API documentation viewer
+- **JSON & YAML support** - Works with both OpenAPI formats
+- **Live reload** - Preview updates automatically when you save
+- **Theme support** - Respects your VS Code theme (dark/light)
+- **Sidebar navigation** - Easy navigation through your API
+- **Try it out** - Test your API endpoints directly
 
 ## Usage
 
