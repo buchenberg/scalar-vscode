@@ -2,7 +2,7 @@
   "name": "scalar-openapi-preview",
   "displayName": "Scalar OpenAPI Preview",
   "description": "Preview OpenAPI/Swagger specifications with the beautiful Scalar API reference viewer",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publisher": "GregoryBuchenberger",
   "engines": {
     "vscode": "^1.85.0"
