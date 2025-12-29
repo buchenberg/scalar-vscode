@@ -10,7 +10,7 @@ declare const __SCALAR_CONFIG__: {
 };
 
 // Get VS Code API for potential future messaging
-const vscode = acquireVsCodeApi();
+const _vscode = acquireVsCodeApi();
 
 // Get the config injected by the extension
 const config = __SCALAR_CONFIG__;

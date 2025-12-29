@@ -49,16 +49,16 @@ You can customize the Scalar viewer through VS Code settings:
 
 ```bash
 # Install dependencies
-npm install
+pnpm install
 
 # Compile TypeScript
-npm run compile
+pnpm run compile
 
 # Watch for changes
-npm run watch
+pnpm run watch
 
 # Package extension
-npm run package
+pnpm run package
 ```
 
 ## Credits
