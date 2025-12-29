@@ -1,0 +1,80 @@
+name: Publish Extension
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Triggers on version tags like v1.2.0
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g., 1.2.0)'
+        type: string
+        required: true
+      publish_marketplace:
+        description: 'Publish to VS Marketplace'
+        type: boolean
+        default: true
+      publish_openvsx:
+        description: 'Publish to Open VSX'
+        type: boolean
+        default: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            # Extract version from tag (remove 'v' prefix)
+            VERSION=${GITHUB_REF#refs/tags/v}
+          else
+            # Use manually provided version
+            VERSION="${{ github.event.inputs.version }}"
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "📦 Publishing version: $VERSION"
+
+      - name: Update package.json version
+        run: |
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
+            pkg.version = '${{ steps.version.outputs.version }}';
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+            console.log('Updated package.json to version:', pkg.version);
+          "
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build extension
+        run: npm run build
+
+      # Publish to VS Code Marketplace
+      - name: Publish to Visual Studio Marketplace
+        if: github.event_name == 'push' || github.event.inputs.publish_marketplace == 'true'
+        run: npx @vscode/vsce publish -p ${{ secrets.VSCE_PAT }}
+
+      # Publish to Open VSX
+      - name: Publish to Open VSX
+        if: github.event_name == 'push' || github.event.inputs.publish_openvsx == 'true'
+        run: |
+          # Temporarily update publisher for Open VSX
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
+            pkg.publisher = 'buchenberg';
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+          "
+          npx ovsx publish -p ${{ secrets.OVSX_PAT }}
