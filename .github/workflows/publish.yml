@@ -89,7 +89,7 @@ jobs:
       # Publish to VS Code Marketplace
       - name: Publish to Visual Studio Marketplace
         if: github.event_name == 'push' || github.event.inputs.publish_marketplace == 'true'
-        run: npx @vscode/vsce publish -p ${{ secrets.VSCE_PAT }}
+        run: npx @vscode/vsce publish --no-dependencies -p ${{ secrets.VSCE_PAT }}
 
       # Publish to Open VSX
       - name: Publish to Open VSX
@@ -102,4 +102,4 @@ jobs:
             pkg.publisher = 'buchenberg';
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
           "
-          npx ovsx publish -p ${{ secrets.OVSX_PAT }}
+          npx ovsx publish --no-dependencies -p ${{ secrets.OVSX_PAT }}
