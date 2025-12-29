@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - 'v*.*.*'  # Triggers on version tags like v1.2.0
+      - '[0-9]*.*.*'  # Also accepts tags without v prefix like 1.2.0
   workflow_dispatch:
     inputs:
       version:
@@ -36,8 +37,9 @@ jobs:
         id: version
         run: |
           if [ "${{ github.event_name }}" = "push" ]; then
-            # Extract version from tag (remove 'v' prefix)
-            VERSION=${GITHUB_REF#refs/tags/v}
+            # Extract version from tag (remove 'v' prefix if present)
+            TAG=${GITHUB_REF#refs/tags/}
+            VERSION=${TAG#v}
           else
             # Use manually provided version
             VERSION="${{ github.event.inputs.version }}"
