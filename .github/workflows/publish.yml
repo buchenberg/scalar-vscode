@@ -63,6 +63,22 @@ jobs:
       - name: Build extension
         run: npm run build
 
+      # Package VSIX files for release
+      - name: Package VSIX files
+        run: npm run package
+
+      # Create GitHub Release with VSIX files
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: v${{ steps.version.outputs.version }}
+          files: |
+            *.vsix
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       # Publish to VS Code Marketplace
       - name: Publish to Visual Studio Marketplace
         if: github.event_name == 'push' || github.event.inputs.publish_marketplace == 'true'
