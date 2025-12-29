@@ -13,6 +13,10 @@ A Visual Studio Code extension that provides a beautiful, interactive preview of
 - **Sidebar navigation** - Easy navigation through your API
 - **Try it out** - Test your API endpoints directly
 
+## Known Limitations
+
+- **No synchronized scrolling** - The preview does not automatically scroll to match your position in the editor. This is intentional, as synchronized scrolling in many preview extensions can result in jerky, distracting behavior. In a future release, the extension may support manual navigation to sections within the editor spec by clicking links in the preview.
+
 ## Usage
 
 1. Open any OpenAPI/Swagger specification file (`.json`, `.yaml`, or `.yml`)
