@@ -36,8 +36,8 @@ function buildForPublisher(target, publisherName) {
     writePackageJson(pkg);
 
     try {
-        // Build the VSIX
-        execSync('npx @vscode/vsce package', { stdio: 'inherit' });
+        // Build the VSIX (--no-dependencies skips npm dependency check which doesn't work with pnpm)
+        execSync('npx @vscode/vsce package --no-dependencies', { stdio: 'inherit' });
 
         // Rename the output file to include the target
         const version = pkg.version;
